@@ -1,11 +1,11 @@
-# Azure IoTCentral SDK for MicroPython
+# Azure IoT Hub SDK for MicroPython
 
 [![Join the chat at https://gitter.im/iotdisc/community](https://badges.gitter.im/iotdisc.svg)](https://gitter.im/iotdisc/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Licensed under the MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/iot-for-all/iotc-micropython-client/blob/master/LICENSE)
 [![PyPI version](https://badge.fury.io/py/micropython-iotc.svg)](https://badge.fury.io/py/micropython-iotc)
 
-### An Azure IoT Central device client library for Micropython.
-This repository contains code for the Azure IoT Central SDK for Micropython. This enables micropython developers to easily create device solutions that semealessly connect to Azure IoT Central applications.
+### An Azure IoT Hub device client library for Micropython.
+This repository contains code for the Azure IoT Hub SDK for Micropython. This enables micropython developers to easily create device solutions that semealessly connect to Azure IoT Hub.
 It can run on various boards with some tweaks for low-memory devices.
 
 
@@ -34,11 +34,6 @@ except:
 ```
 
 The same commands apply when running through Micropython REPL.
-
-> **NOTE:** we are dropping support for ESP8266/NodeMCU devices.  In testing the code on ESP8266 using 1.20.0 of Micropython the device continuously triggers the watchdog timers (WDT) on registration of the device.  In the past we have managed to work around the agressive WDT issues.  Given that the ESP32 is a far more capable device we suggest the use of ESP32 over ESP8622.
-
-> **NOTE:** we have switched our primary testing device to be the Raspberry Pi Pico W as it is widly available and a great device for doing Micropython development.  See: [Raspberry Pi Pico Getting started](https://projects.raspberrypi.org/en/projects/getting-started-with-the-pico).  The tested version of Micropython on the Raspberry Pi Pico W was v1.20.0 [release notes](https://github.com/micropython/micropython/releases/tag/v1.20.0)
-
 
 ## Samples
 Check out the [sample repository](samples) for example code showing how the SDK can be used in the various scenarios:
