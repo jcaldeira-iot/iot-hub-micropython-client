@@ -1,54 +1,46 @@
 import sys
-from utime import sleep
+import time
 from random import randint
 
 # If your device needs wifi before running uncomment and adapt the code below as necessary
-# import network
-# wlan = network.WLAN(network.STA_IF)
-# wlan.active(True)
-# wlan.connect("SSID","password")
-# while not wlan.isconnected():
-#     pass
-# print(wlan.isconnected())
+#import network
+#wlan = network.WLAN(network.STA_IF)
+#wlan.active(True)
+#wlan.connect("SSID","password")
+#while not wlan.isconnected():
+#    pass
+#print(wlan.isconnected())
+#print('network config:', wlan.ipconfig('addr4'))
 
 try:
     import iotc
 except:
     import mip
-    mip.install('github:Azure/iot-central-micropython-client/package.json')
+    mip.install('github:jcaldeira1977/iot-hub-micropython-client/package.json')
     import iotc
     
-from iotc import IoTCClient,IoTCConnectType,IoTCLogLevel,IoTCEvents
+from iotc import IoTCClient, IoTCConnectType, IoTCEvents, IoTCLogLevel
 
-scope_id='scope-id'
-device_id='device-id'
-key='device or symmetric key'
-conn_type=IoTCConnectType.DEVICE_KEY
+IOT_HUB = '<hub_name>.azure-devices.net'
+DEVICE_ID = '<device_name>'
+SAS_TOKEN = '<sas_token>' # something like "SharedAccessSignature sr=..."
+conn_type = IoTCConnectType.SYMM_KEY
 
-client=IoTCClient(scope_id,device_id,conn_type,key)
+client = IoTCClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
 client.set_log_level(IoTCLogLevel.ALL)
-
-def on_properties(name, value):
-    print('Received property {} with value {}'.format(name, value))
-    return value
-
 
 def on_commands(command, ack):
     print('Command {}.'.format(command.name))
     ack(command, command.payload)
 
-def on_enqueued(command):
-    print('Enqueued Command {}.'.format(command.name))
-
-
-client.on(IoTCEvents.PROPERTIES, on_properties)
 client.on(IoTCEvents.COMMANDS, on_commands)
 client.connect()
 
-client.send_property({'readOnlyProp':40})
-
+startTime = time.ticks_ms()
 while client.is_connected():
     client.listen()
-    print('Sending telemetry')
-    client.send_telemetry({'temperature':randint(0,20),'pressure':randint(0,20),'acceleration':{'x':randint(0,20),'y':randint(0,20)}})
-    sleep(2)
+    if time.ticks_diff(time.ticks_ms(), startTime) > 3000:
+        print('Sending telemetry')
+        client.send_telemetry({'temperature':randint(0,20),'pressure':randint(0,20)})
+        startTime = time.ticks_ms()
+    time.sleep_ms(500)
