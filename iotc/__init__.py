@@ -4,11 +4,12 @@ import ure
 import json
 from utime import time,sleep
 import gc
+import ssl
 try:
     from umqtt.robust import MQTTClient
 except:
     import mip
-    mip.install('github:Azure/iot-central-micropython-client/package.json')
+    mip.install('github:jcaldeira1977/iot-hub-micropython-client/package.json')
     from umqtt.robust import MQTTClient
 
 gc.collect()
@@ -99,11 +100,8 @@ class IoTCClient():
             self._on_enqueued_commands(command)
 
     def connect(self):
-        prov = ProvisioningClient(
-            self._id_scope, self._device_id, self._credentials_type,self._credentials,self._logger,self._model_id)
-        creds = prov.register()
-        self._mqtt_client = MQTTClient(self._device_id, creds.host, 8883, creds.user.encode(
-            'utf-8'), creds.password.encode('utf-8'), ssl=True, keepalive=60)
+        self._mqtt_client = MQTTClient(self._device_id, self._id_scope, 8883, self._id_scope + "/" +
+            self._device_id, self._credentials, ssl=ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT), keepalive=60)
         self._commands_regex = ure.compile(
             '\$iothub\/methods\/POST\/(.+)\/\?\$rid=(.+)')
         self._mqtt_client.connect(False)
