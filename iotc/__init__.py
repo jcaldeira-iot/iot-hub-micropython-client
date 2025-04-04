@@ -1,5 +1,5 @@
-from iotc.constants import *
-from iotc.provision import ProvisioningClient
+from ioth.constants import *
+from ioth.provision import ProvisioningClient
 import ure
 import json
 from utime import time,sleep
@@ -46,7 +46,7 @@ class IoTCClient():
         if logger is not None:
             self._logger = logger
         else:
-            self._logger = ConsoleLogger(IoTCLogLevel.API_ONLY)
+            self._logger = ConsoleLogger(IoTHLogLevel.API_ONLY)
         self._twin_request_id = time()
 
     def set_content_type(self, content_type):
@@ -193,7 +193,7 @@ class IoTCClient():
 
     def _on_commands(self, command: Command):
         try:
-            cmd_cb = self._events[IoTCEvents.COMMANDS]
+            cmd_cb = self._events[IoTHEvents.COMMANDS]
         except KeyError:
             return
 
@@ -205,7 +205,7 @@ class IoTCClient():
 
     def _on_enqueued_commands(self, command: Command):
         try:
-            cmd_cb = self._events[IoTCEvents.ENQUEUED_COMMANDS]
+            cmd_cb = self._events[IoTHEvents.ENQUEUED_COMMANDS]
         except KeyError:
             return
 
