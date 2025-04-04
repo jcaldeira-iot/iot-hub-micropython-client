@@ -2,10 +2,10 @@ import sys
 import gc
 gc.collect()
 import json
-from iotc.constants import IoTCConnectType,encode_uri_component,ConsoleLogger,IoTCLogLevel
+from ioth.constants import IoTHConnectType,encode_uri_component,ConsoleLogger,IoTHLogLevel
 import ubinascii
 import hashlib
-from iotc.hmac import new as hmac
+from ioth.hmac import new as hmac
 gc.collect()
 try:
     from utime import time, sleep
@@ -49,7 +49,7 @@ class Credentials:
 
 class ProvisioningClient():
 
-    def __init__(self, scope_id, registration_id, credentials_type: IoTCConnectType, credentials, logger, model_id=None, endpoint='global.azure-devices-provisioning.net'):
+    def __init__(self, scope_id, registration_id, credentials_type: IoTHConnectType, credentials, logger, model_id=None, endpoint='global.azure-devices-provisioning.net'):
         self._endpoint = endpoint
         self._scope_id = scope_id
         self._registration_id = registration_id
@@ -58,14 +58,14 @@ class ProvisioningClient():
         if logger is not None:
             self._logger=logger
         else:
-            self._logger=ConsoleLogger(IoTCLogLevel.DISABLED)
+            self._logger=ConsoleLogger(IoTHLogLevel.DISABLED)
 
         if model_id is not None:
             self._model_id = model_id
 
-        if self._credentials_type in (IoTCConnectType.DEVICE_KEY, IoTCConnectType.SYMM_KEY):
+        if self._credentials_type in (IoTHConnectType.DEVICE_KEY, IoTHConnectType.SYMM_KEY):
             self._device_key = credentials
-            if self._credentials_type == IoTCConnectType.SYMM_KEY:
+            if self._credentials_type == IoTHConnectType.SYMM_KEY:
                 self._device_key = self._compute_key(
                     credentials, self._registration_id)
                 # self._logger.debug('Device key: {}'.format(self._key_or_cert))
@@ -179,7 +179,7 @@ class ProvisioningClient():
         except:
             pass
         try:
-            del sys.modules['iotc.hmac']
+            del sys.modules['ioth.hmac']
             del hmac
         except:
             pass
