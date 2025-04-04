@@ -113,7 +113,8 @@ class ProvisioningClient():
         self._logger.debug('Registering...')
         body = {'registrationId': self._registration_id}
         try:
-            body['data'] = {'iotcModelId': self._model_id}
+            #body['data'] = {'iotcModelId': self._model_id}
+            body['payload'] = {'iotcModelId': self._model_id}
         except:
             pass
 
