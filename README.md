@@ -12,8 +12,8 @@ It can run on various boards with some tweaks for low-memory devices.
 ## Prerequisites
 + Micropython 1.20+ (recommended).
 
-## Import ``iotc``
-With this release we have moved from upip to mip for installing dependencies.  The iotc and dependencies are in the package.json file in the root or the repo.  The iotc file will now be installed from this GitHub repository rather from PyPi making bug fixes easier for contributors.  The sample main.py has been changed so that it does an install when running if the iotc library is not present.  For a manual install you can use the following.  Be aware that your device will need to have internet access so it may need additional code to setup and connect to wifi.
+## Import ``ioth``
+With this release we have moved from upip to mip for installing dependencies.  The ioth and dependencies are in the package.json file in the root or the repo.  The iotc file will now be installed from this GitHub repository rather from PyPi making bug fixes easier for contributors.  The sample main.py has been changed so that it does an install when running if the ioth library is not present.  For a manual install you can use the following.  Be aware that your device will need to have internet access so it may need additional code to setup and connect to wifi.
 
 ```py
 # If your device needs wifi before running uncomment and adapt the code below as necessary
@@ -26,11 +26,11 @@ With this release we have moved from upip to mip for installing dependencies.  T
 # print(wlan.isconnected())
 
 try:
-    import iotc
+    import ioth
 except:
     import mip
     mip.install('github:jcaldeira1977/iot-hub-micropython-client/package.json')
-    import iotc
+    import ioth
 ```
 
 The same commands apply when running through Micropython REPL.
@@ -47,12 +47,12 @@ az iot hub generate-sas-token -d <device_name> -n <hub_name> --du <valid_token_d
 
 ### Init
 ```py
-from iotc import IoTCConnectType
+from ioth import IoTHConnectType
 IOT_HUB = '<hub_name>.azure-devices.net'
 DEVICE_ID = '<device_name>'
 SAS_TOKEN = '<sas_token>' # something like "SharedAccessSignature sr=..."
-conn_type = IoTCConnectType.SYMM_KEY
-client = IoTCClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
+conn_type = IoTHConnectType.SYMM_KEY
+client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
 ```
 
 You can pass a logger instance to have your custom log implementation. (see [#Logging](#logging))
@@ -60,9 +60,9 @@ You can pass a logger instance to have your custom log implementation. (see [#Lo
 e.g.
 
 ```py
-from iotc import ConsoleLogger,IoTCLogLevel
-logger = ConsoleLogger(IoTCLogLevel.ALL)
-client = IoTCClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN, logger)
+from ioth import ConsoleLogger,IoTHLogLevel
+logger = ConsoleLogger(IoTHLogLevel.ALL)
+client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN, logger)
 ```
 
 ### Connect
@@ -70,7 +70,7 @@ client = IoTCClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN, logger)
 ```py
 client.connect()
 ```
-After successfull connection, IOTC context is available for further commands.
+After successfull connection, IOTH context is available for further commands.
 
 ## Operations
 
@@ -89,8 +89,8 @@ while client.is_connected():
 ```
 
 > **NOTE:** Payload content type and encoding are set by default to 'application/json' and 'utf-8'. Alternative values can be set using these functions:<br/>
-_iotc.set_content_type(content_type)_ # .e.g 'text/plain'
-_iotc.set_content_encoding(content_encoding)_ # .e.g 'ascii'
+_ioth.set_content_type(content_type)_ # .e.g 'text/plain'
+_ioth.set_content_encoding(content_encoding)_ # .e.g 'ascii'
 
 ## Listen to events
 Due to limitations of the Mqtt library for micropython, you must explictely declare your will to listen for incoming messages. This client implements a non-blocking way of receiving messages so if no messages are present, it will not wait for them and continue execution.
@@ -108,7 +108,7 @@ You also need to subscribe to specific events to effectively process messages, o
 ### Listen to commands
 Subscribe to command events before calling _connect()_:
 ```py
-client.on(IoTCEvents.COMMANDS, callback)
+client.on(IoTHEvents.COMMANDS, callback)
 ```
 To provide feedbacks for the command like execution result or progress, the client can call the **ack** function available in the callback.
 
@@ -118,18 +118,18 @@ def on_commands(command, ack):
     print(command.name)
     ack(command, 'Command received')
 
-client.on(IoTCEvents.COMMANDS, on_commands)
+client.on(IoTHEvents.COMMANDS, on_commands)
 ```
 
 ## Logging
 
 The default log prints to serial console operations status and errors.
 This is the _API_ONLY_ logging level.
-The function __set_log_level()__ can be used to change options or disable logs. It accepts a _IoTCLogLevel_ value among the following:
+The function __set_log_level()__ can be used to change options or disable logs. It accepts a _IoTHLogLevel_ value among the following:
 
--  IoTCLogLevel.DISABLED (log disabled)
--  IoTCLogLevel.API_ONLY (information and errors, default)
--  IoTCLogLevel.ALL (all messages, debug and underlying errors)
+-  IoTHLogLevel.DISABLED (log disabled)
+-  IoTHLogLevel.API_ONLY (information and errors, default)
+-  IoTHLogLevel.ALL (all messages, debug and underlying errors)
 
 The device client also accepts an optional Logger instance to redirect logs to other targets than console.
 The custom class must implement three methods:
