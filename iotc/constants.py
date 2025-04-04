@@ -1,13 +1,13 @@
-class IoTCLogLevel:
+class IoTHLogLevel:
     DISABLED = 1
     API_ONLY = 2
     ALL = 3
 
-class IoTCConnectType:
+class IoTHConnectType:
     SYMM_KEY = 1
     DEVICE_KEY = 2
 
-class IoTCEvents:
+class IoTHEvents:
     PROPERTIES = 1
     COMMANDS = 2
     ENQUEUED_COMMANDS = 3
@@ -22,18 +22,18 @@ class HubTopics:
     ENQUEUED_COMMANDS = 'devices/{}/messages/devicebound'
 
 class ConsoleLogger:
-    def __init__(self, log_level=IoTCLogLevel.API_ONLY):
+    def __init__(self, log_level=IoTHLogLevel.API_ONLY):
         self._log_level = log_level
 
     def _log(self, message):
         print(message)
 
     def info(self, message):
-        if self._log_level != IoTCLogLevel.DISABLED:
+        if self._log_level != IoTHLogLevel.DISABLED:
             self._log(message)
 
     def debug(self, message):
-        if self._log_level == IoTCLogLevel.ALL:
+        if self._log_level == IoTHLogLevel.ALL:
             self._log(message)
 
     def set_log_level(self, log_level):
