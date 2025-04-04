@@ -32,7 +32,7 @@ class Command():
     @property
     def request_id(self):
         return self._request_id
-class IoTCClient():
+class IoTHClient():
     def __init__(self, id_scope, device_id, credentials_type: IoTCConnectType, credentials, logger=None):
         self._device_id = device_id
         self._id_scope = id_scope
@@ -155,7 +155,7 @@ class IoTCClient():
 
     def on_properties_update(self, patch):
         try:
-            prop_cb = self._events[IoTCEvents.PROPERTIES]
+            prop_cb = self._events[IoTHEvents.PROPERTIES]
         except:
             return
 
