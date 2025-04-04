@@ -13,27 +13,27 @@ from random import randint
 #print('network config:', wlan.ipconfig('addr4'))
 
 try:
-    import iotc
+    import ioth
 except:
     import mip
     mip.install('github:jcaldeira1977/iot-hub-micropython-client/package.json')
-    import iotc
+    import ioth
     
-from iotc import IoTCClient, IoTCConnectType, IoTCEvents, IoTCLogLevel
+from ioth import IoTHClient, IoTHConnectType, IoTHEvents, IoTHLogLevel
 
 IOT_HUB = '<hub_name>.azure-devices.net'
 DEVICE_ID = '<device_name>'
 SAS_TOKEN = '<sas_token>' # something like "SharedAccessSignature sr=..."
-conn_type = IoTCConnectType.SYMM_KEY
+conn_type = IoTHConnectType.SYMM_KEY
 
-client = IoTCClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
-client.set_log_level(IoTCLogLevel.ALL)
+client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
+client.set_log_level(IoTHLogLevel.ALL)
 
 def on_commands(command, ack):
     print('Command {}.'.format(command.name))
     ack(command, command.payload)
 
-client.on(IoTCEvents.COMMANDS, on_commands)
+client.on(IoTHEvents.COMMANDS, on_commands)
 client.connect()
 
 startTime = time.ticks_ms()
