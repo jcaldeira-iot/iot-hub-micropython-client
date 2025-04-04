@@ -13,7 +13,7 @@ It can run on various boards with some tweaks for low-memory devices.
 + Micropython 1.20+ (recommended).
 
 ## Import ``ioth``
-With this release we have moved from upip to mip for installing dependencies.  The ioth and dependencies are in the package.json file in the root or the repo.  The iotc file will now be installed from this GitHub repository rather from PyPi making bug fixes easier for contributors.  The sample main.py has been changed so that it does an install when running if the ioth library is not present.  For a manual install you can use the following.  Be aware that your device will need to have internet access so it may need additional code to setup and connect to wifi.
+With this release we have moved from upip to mip for installing dependencies.  The ioth and dependencies are in the package.json file in the root or the repo.  The ioth file will now be installed from this GitHub repository rather from PyPi making bug fixes easier for contributors.  The sample main.py has been changed so that it does an install when running if the ioth library is not present.  For a manual install you can use the following.  Be aware that your device will need to have internet access so it may need additional code to setup and connect to wifi.
 
 ```py
 # If your device needs wifi before running uncomment and adapt the code below as necessary
@@ -88,9 +88,7 @@ while client.is_connected():
     sleep(3)
 ```
 
-> **NOTE:** Payload content type and encoding are set by default to 'application/json' and 'utf-8'. Alternative values can be set using these functions:<br/>
-_ioth.set_content_type(content_type)_ # .e.g 'text/plain'
-_ioth.set_content_encoding(content_encoding)_ # .e.g 'ascii'
+> **NOTE:** Payload content type and encoding are set by default to 'application/json' and 'utf-8'. Alternative values can be set using these functions:   _ioth.set_content_type(content_type)_ # .e.g 'text/plain'  |   _ioth.set_content_encoding(content_encoding)_ # .e.g 'ascii'
 
 ## Listen to events
 Due to limitations of the Mqtt library for micropython, you must explictely declare your will to listen for incoming messages. This client implements a non-blocking way of receiving messages so if no messages are present, it will not wait for them and continue execution.
