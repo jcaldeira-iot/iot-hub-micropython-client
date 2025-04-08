@@ -3,10 +3,6 @@ class IoTHLogLevel:
     API_ONLY = 2
     ALL = 3
 
-class IoTHConnectType:
-    SYMM_KEY = 1
-    DEVICE_KEY = 2
-
 class IoTHEvents:
     PROPERTIES = 1
     COMMANDS = 2
