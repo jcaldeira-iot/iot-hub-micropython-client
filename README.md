@@ -23,7 +23,7 @@ With this release we have moved from upip to mip for installing dependencies.  T
 #wlan.connect("SSID","password")
 #while not wlan.isconnected():
 #    pass
-#print('network config:', wlan.ipconfig('addr4'))
+#print('Network config:', wlan.ipconfig('addr4'))
 
 try:
     import ioth
