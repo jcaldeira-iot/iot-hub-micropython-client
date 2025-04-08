@@ -47,12 +47,11 @@ az iot hub generate-sas-token -d <device_name> -n <hub_name> --du <token_expiry_
 
 ### Init
 ```py
-from ioth import IoTHConnectType
+from ioth import IoTHClient
 IOT_HUB = '<hub_name>.azure-devices.net'
 DEVICE_ID = '<device_name>'
 SAS_TOKEN = '<sas_token>' # something like "SharedAccessSignature sr=..."
-conn_type = IoTHConnectType.SYMM_KEY
-client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
+client = IoTHClient(IOT_HUB, DEVICE_ID, SAS_TOKEN)
 ```
 
 You can pass a logger instance to have your custom log implementation. (see [#Logging](#logging))
@@ -60,9 +59,9 @@ You can pass a logger instance to have your custom log implementation. (see [#Lo
 e.g.
 
 ```py
-from ioth import ConsoleLogger,IoTHLogLevel
+from ioth import ConsoleLogger, IoTHLogLevel
 logger = ConsoleLogger(IoTHLogLevel.ALL)
-client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN, logger)
+client = IoTHClient(IOT_HUB, DEVICE_ID, SAS_TOKEN, logger)
 ```
 
 ### Connect
@@ -83,8 +82,9 @@ client.send_telemetry(payload)
 e.g. Send telemetry every 3 seconds
 ```py
 while client.is_connected():
-    print('Sending telemetry')
-    client.send_telemetry({'temperature':randint(0,20),'pressure':randint(0,20),'acceleration':{'x':randint(0,20),'y':randint(0,20)}})
+    json_msg = {'temperature':randint(0,20),'pressure':randint(0,20),'acceleration':{'x':randint(0,20),'y':randint(0,20)}}
+    print('Sending telemetry:', json_msg)
+    client.send_telemetry(json_msg)
     sleep(3)
 ```
 
