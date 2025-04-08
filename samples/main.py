@@ -3,14 +3,14 @@ import time
 from random import randint
 
 # If your device needs wifi before running uncomment and adapt the code below as necessary
-#import network
-#wlan = network.WLAN(network.STA_IF)
-#wlan.active(True)
-#wlan.connect("SSID","password")
-#while not wlan.isconnected():
-#    pass
-#print(wlan.isconnected())
-#print('network config:', wlan.ipconfig('addr4'))
+import network
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect("SSID","password")
+while not wlan.isconnected():
+    pass
+print(wlan.isconnected())
+print('network config:', wlan.ipconfig('addr4'))
 
 try:
     import ioth
