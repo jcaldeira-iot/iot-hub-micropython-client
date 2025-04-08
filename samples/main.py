@@ -19,14 +19,13 @@ except:
     mip.install('github:jcaldeira-iot/iot-hub-micropython-client/package.json')
     import ioth
     
-from ioth import IoTHClient, IoTHConnectType, IoTHEvents, IoTHLogLevel
+from ioth import IoTHClient, IoTHEvents, IoTHLogLevel
 
 IOT_HUB = '<hub_name>.azure-devices.net'
 DEVICE_ID = '<device_name>'
 SAS_TOKEN = '<sas_token>' # something like "SharedAccessSignature sr=..."
-conn_type = IoTHConnectType.SYMM_KEY
 
-client = IoTHClient(IOT_HUB, DEVICE_ID, conn_type, SAS_TOKEN)
+client = IoTHClient(IOT_HUB, DEVICE_ID, SAS_TOKEN)
 client.set_log_level(IoTHLogLevel.ALL)
 
 def on_commands(command, ack):
@@ -40,7 +39,8 @@ startTime = time.ticks_ms()
 while client.is_connected():
     client.listen()
     if time.ticks_diff(time.ticks_ms(), startTime) > 3000:
-        print('Sending telemetry')
-        client.send_telemetry({'temperature':randint(0,20),'pressure':randint(0,20)})
+        json_msg = {'temperature':randint(0,20),'pressure':randint(0,20)}
+        print('Sending telemetry:', json_msg)
+        client.send_telemetry(json_msg)
         startTime = time.ticks_ms()
     time.sleep_ms(500)
