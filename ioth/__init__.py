@@ -1,5 +1,4 @@
 from ioth.constants import *
-from ioth.provision import ProvisioningClient
 import ure
 import json
 from utime import time,sleep
@@ -33,10 +32,9 @@ class Command():
     def request_id(self):
         return self._request_id
 class IoTHClient():
-    def __init__(self, id_scope, device_id, credentials_type: IoTCConnectType, credentials, logger=None):
+    def __init__(self, id_scope, device_id, credentials, logger=None):
         self._device_id = device_id
         self._id_scope = id_scope
-        self._credentials_type = credentials_type
         self._content_type = 'application%2Fjson'
         self._content_encoding = 'utf-8'
         self._connected = False
