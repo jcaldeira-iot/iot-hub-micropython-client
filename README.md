@@ -59,7 +59,7 @@ You can pass a logger instance to have your custom log implementation. (see [#Lo
 e.g.
 
 ```py
-from ioth import ConsoleLogger, IoTHLogLevel
+from ioth import ConsoleLogger, IoTHLogLevel, IoTHClient
 logger = ConsoleLogger(IoTHLogLevel.ALL)
 client = IoTHClient(IOT_HUB, DEVICE_ID, SAS_TOKEN, logger)
 ```
