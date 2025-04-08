@@ -1,7 +1,5 @@
 {
   "urls": [
-    ["ioth/hmac.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/hmac.py"],
-    ["ioth/provision.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/provision.py"],
     ["ioth/constants.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/constants.py"],
     ["ioth/__init__.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/__init__.py"]
   ],
