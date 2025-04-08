@@ -42,7 +42,7 @@ Check out the [sample repository](samples) for example code showing how the SDK 
 ## Connecting
 Currently only connection through SAS token is supported. To generate a SAS token for a target IoT Hub device use the following command:
 ```py
-az iot hub generate-sas-token -d <device_name> -n <hub_name> --du <valid_token_duration_in_sec>
+az iot hub generate-sas-token -d <device_name> -n <hub_name> --du <token_expiry_time_in_sec>
 ```
 
 ### Init
