@@ -29,7 +29,7 @@ try:
     import ioth
 except:
     import mip
-    mip.install('github:jcaldeira1977/iot-hub-micropython-client/package.json')
+    mip.install('github:jcaldeira-iot/iot-hub-micropython-client/package.json')
     import ioth
 ```
 
