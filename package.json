@@ -3,9 +3,5 @@
     ["ioth/constants.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/constants.py"],
     ["ioth/__init__.py", "github:jcaldeira-iot/iot-hub-micropython-client/ioth/__init__.py"]
   ],
-  "deps": [
-    ["umqtt.simple", "latest"],
-    ["umqtt.robust", "latest"]
-  ],
   "version": "1.0"
 }
